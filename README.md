@@ -339,7 +339,7 @@ takeoff_altitude = 2.5
 - **Memory Usage**: ~2GB GPU, ~4GB RAM
 - **CPU Load**: ~40% (Intel i7/AMD Ryzen 5+)
 
-## 🛠️ Development
+## Development
 
 ### Adding New Detection Classes
 
@@ -384,11 +384,11 @@ The system provides real-time analytics:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📞 Contact
+##  Contact
 
 - **Author**: Dieudonne Fonyuy Y.
 - **Email**: dieudonne.yufonyuy@gmail.com
