@@ -1,0 +1,865 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version="1.9">
+  <world name="tomato_farm">
+    <!-- Physics settings optimized for PX4 -->
+    <physics type="ode">
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>250</real_time_update_rate>
+    </physics>
+    
+    <!-- Essential PX4 plugins -->
+    <plugin name="gz::sim::systems::Physics" filename="gz-sim-physics-system"/>
+    <plugin name="gz::sim::systems::UserCommands" filename="gz-sim-user-commands-system"/>
+    <plugin name="gz::sim::systems::SceneBroadcaster" filename="gz-sim-scene-broadcaster-system"/>
+    <plugin name="gz::sim::systems::Contact" filename="gz-sim-contact-system"/>
+    <plugin name="gz::sim::systems::Imu" filename="gz-sim-imu-system"/>
+    <plugin name="gz::sim::systems::AirPressure" filename="gz-sim-air-pressure-system"/>
+    <plugin name="gz::sim::systems::ApplyLinkWrench" filename="gz-sim-apply-link-wrench-system"/>
+    <plugin name="gz::sim::systems::NavSat" filename="gz-sim-navsat-system"/>
+    <plugin name="gz::sim::systems::Sensors" filename="gz-sim-sensors-system">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    
+    <!-- GUI Configuration -->
+    <gui fullscreen="false">
+      <plugin name="3D View" filename="GzScene3D">
+        <gz-gui>
+          <title>3D View</title>
+          <property type="bool" key="showTitleBar">0</property>
+          <property type="string" key="state">docked</property>
+        </gz-gui>
+        <engine>ogre2</engine>
+        <scene>scene</scene>
+        <ambient_light>0.5984631152222222 0.5984631152222222 0.5984631152222222</ambient_light>
+        <background_color>0.8984631152222222 0.8984631152222222 0.8984631152222222</background_color>
+        <camera_pose>7 -5 8 0 0.7 1.57</camera_pose>
+        <camera_clip>
+          <near>0.25</near>
+          <far>25000</far>
+        </camera_clip>
+      </plugin>
+      
+      <!-- Essential GUI plugins only -->
+      <plugin filename="EntityContextMenuPlugin" name="Entity context menu">
+        <gz-gui>
+          <property key="state" type="string">floating</property>
+          <property key="width" type="double">5</property>
+          <property key="height" type="double">5</property>
+          <property key="showTitleBar" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+      
+      <plugin filename="GzSceneManager" name="Scene Manager">
+        <gz-gui>
+          <property key="resizable" type="bool">false</property>
+          <property key="width" type="double">5</property>
+          <property key="height" type="double">5</property>
+          <property key="state" type="string">floating</property>
+          <property key="showTitleBar" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+      
+      <plugin filename="InteractiveViewControl" name="Interactive view control">
+        <gz-gui>
+          <property key="resizable" type="bool">false</property>
+          <property key="width" type="double">5</property>
+          <property key="height" type="double">5</property>
+          <property key="state" type="string">floating</property>
+          <property key="showTitleBar" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+      
+      <plugin filename="CameraTracking" name="Camera Tracking">
+        <gz-gui>
+          <property key="resizable" type="bool">false</property>
+          <property key="width" type="double">5</property>
+          <property key="height" type="double">5</property>
+          <property key="state" type="string">floating</property>
+          <property key="showTitleBar" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+      
+      <plugin name="World control" filename="WorldControl">
+        <gz-gui>
+          <title>World control</title>
+          <property type="bool" key="showTitleBar">0</property>
+          <property type="bool" key="resizable">0</property>
+          <property type="double" key="height">72</property>
+          <property type="double" key="width">121</property>
+          <property type="double" key="z">1</property>
+          <property type="string" key="state">floating</property>
+          <anchors target="3D View">
+            <line own="left" target="left"/>
+            <line own="bottom" target="bottom"/>
+          </anchors>
+        </gz-gui>
+        <play_pause>1</play_pause>
+        <step>1</step>
+        <start_paused>1</start_paused>
+      </plugin>
+      
+      <plugin name="World stats" filename="WorldStats">
+        <gz-gui>
+          <title>World stats</title>
+          <property type="bool" key="showTitleBar">0</property>
+          <property type="bool" key="resizable">0</property>
+          <property type="double" key="height">110</property>
+          <property type="double" key="width">290</property>
+          <property type="double" key="z">1</property>
+          <property type="string" key="state">floating</property>
+          <anchors target="3D View">
+            <line own="right" target="right"/>
+            <line own="bottom" target="bottom"/>
+          </anchors>
+        </gz-gui>
+        <sim_time>1</sim_time>
+        <real_time>1</real_time>
+        <real_time_factor>1</real_time_factor>
+        <iterations>1</iterations>
+      </plugin>
+      
+      <plugin name="Entity tree" filename="EntityTree"/>
+    </gui>
+    
+    <!-- World settings -->
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type="adiabatic"/>
+    
+    <!-- Scene settings -->
+    <scene>
+      <grid>false</grid>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>true</shadows>
+    </scene>
+    
+    <!-- Ground plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1 1</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0 0 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    
+    <!-- Enhanced lighting for better tomato detection -->
+    <light name="sunUTC" type="directional">
+      <pose>0 0 500 0 -0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <intensity>1</intensity>
+      <direction>0.001 0.625 -0.78</direction>
+      <diffuse>0.904 0.904 0.904 1</diffuse>
+      <specular>0.271 0.271 0.271 1</specular>
+      <attenuation>
+        <range>2000</range>
+        <linear>0</linear>
+        <constant>1</constant>
+        <quadratic>0</quadratic>
+      </attenuation>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    
+    <!-- GPS/Navigation reference point -->
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>47.397971057728974</latitude_deg>
+      <longitude_deg>8.546163739800146</longitude_deg>
+      <elevation>0</elevation>
+    </spherical_coordinates>
+    
+    <!-- Farm Structure -->
+    <include>
+      <uri>structure_0</uri>
+      <name>structure_0</name>
+      <pose>1.0 0.5 0.1 0 0 0</pose>
+    </include>
+    
+    <!-- Row 1: X = 0 -->
+    <include>
+      <uri>metal_798428</uri>
+      <name>metal_798428</name>
+      <pose>0.0 0.5 -0.34 0 0 -1.6</pose>
+    </include>
+    
+    <!-- Plants Y = 0 to 5 -->
+    <include>
+      <uri>tomato_643542</uri>
+      <name>tomato_643542</name>
+      <pose>0.0 0.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_643542</uri>
+      <name>flowerpot_643542</name>
+      <pose>0.0 0.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_793198</uri>
+      <name>soilbed_793198</name>
+      <pose>0.0 0.0 0.4 0 0 0</pose>
+    </include>
+    <!-- Add one lamp for this row as test -->
+    <include>
+      <uri>lamp_921531</uri>
+      <name>lamp_921531</name>
+      <pose>0.0 0.0 2.6 0 3.14159 1.570795</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_432444</uri>
+      <name>tomato_432444</name>
+      <pose>0.0 1.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_432444</uri>
+      <name>flowerpot_432444</name>
+      <pose>0.0 1.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_173600</uri>
+      <name>soilbed_173600</name>
+      <pose>0.0 1.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_343066</uri>
+      <name>tomato_343066</name>
+      <pose>0.0 2.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_343066</uri>
+      <name>flowerpot_343066</name>
+      <pose>0.0 2.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_240116</uri>
+      <name>soilbed_240116</name>
+      <pose>0.0 2.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_476439</uri>
+      <name>tomato_476439</name>
+      <pose>0.0 3.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_476439</uri>
+      <name>flowerpot_476439</name>
+      <pose>0.0 3.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_668892</uri>
+      <name>soilbed_668892</name>
+      <pose>0.0 3.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_212491</uri>
+      <name>tomato_212491</name>
+      <pose>0.0 4.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_212491</uri>
+      <name>flowerpot_212491</name>
+      <pose>0.0 4.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_289697</uri>
+      <name>soilbed_289697</name>
+      <pose>0.0 4.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_289606</uri>
+      <name>tomato_289606</name>
+      <pose>0.0 5.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_289606</uri>
+      <name>flowerpot_289606</name>
+      <pose>0.0 5.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_890457</uri>
+      <name>soilbed_890457</name>
+      <pose>0.0 5.0 0.4 0 0 0</pose>
+    </include>
+    
+    <!-- Row 2: X = 2 -->
+    <include>
+      <uri>metal_778322</uri>
+      <name>metal_778322</name>
+      <pose>2.0 0.5 -0.34 0 0 -1.6</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_470423</uri>
+      <name>tomato_470423</name>
+      <pose>2.0 0.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_470423</uri>
+      <name>flowerpot_470423</name>
+      <pose>2.0 0.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_241902</uri>
+      <name>soilbed_241902</name>
+      <pose>2.0 0.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_534217</uri>
+      <name>tomato_534217</name>
+      <pose>2.0 1.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_534217</uri>
+      <name>flowerpot_534217</name>
+      <pose>2.0 1.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_651133</uri>
+      <name>soilbed_651133</name>
+      <pose>2.0 1.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_447094</uri>
+      <name>tomato_447094</name>
+      <pose>2.0 2.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_447094</uri>
+      <name>flowerpot_447094</name>
+      <pose>2.0 2.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_283947</uri>
+      <name>soilbed_283947</name>
+      <pose>2.0 2.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_492533</uri>
+      <name>tomato_492533</name>
+      <pose>2.0 3.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_492533</uri>
+      <name>flowerpot_492533</name>
+      <pose>2.0 3.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_43375</uri>
+      <name>soilbed_43375</name>
+      <pose>2.0 3.0 0.4 0 0 0</pose>
+    </include>
+    <!-- Add second lamp -->
+    <include>
+      <uri>lamp_276172</uri>
+      <name>lamp_276172</name>
+      <pose>2.0 3.0 2.6 0 3.14159 1.570795</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_382214</uri>
+      <name>tomato_382214</name>
+      <pose>2.0 4.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_382214</uri>
+      <name>flowerpot_382214</name>
+      <pose>2.0 4.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_803115</uri>
+      <name>soilbed_803115</name>
+      <pose>2.0 4.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_245371</uri>
+      <name>tomato_245371</name>
+      <pose>2.0 5.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_245371</uri>
+      <name>flowerpot_245371</name>
+      <pose>2.0 5.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_796784</uri>
+      <name>soilbed_796784</name>
+      <pose>2.0 5.0 0.4 0 0 0</pose>
+    </include>
+    
+    <!-- Row 3: X = 4 -->
+    <include>
+      <uri>metal_923627</uri>
+      <name>metal_923627</name>
+      <pose>4.0 0.5 -0.34 0 0 -1.6</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_410724</uri>
+      <name>tomato_410724</name>
+      <pose>4.0 0.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_410724</uri>
+      <name>flowerpot_410724</name>
+      <pose>4.0 0.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_801877</uri>
+      <name>soilbed_801877</name>
+      <pose>4.0 0.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_822902</uri>
+      <name>tomato_822902</name>
+      <pose>4.0 1.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_822902</uri>
+      <name>flowerpot_822902</name>
+      <pose>4.0 1.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_953196</uri>
+      <name>soilbed_953196</name>
+      <pose>4.0 1.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_961686</uri>
+      <name>tomato_961686</name>
+      <pose>4.0 2.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_961686</uri>
+      <name>flowerpot_961686</name>
+      <pose>4.0 2.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_2098</uri>
+      <name>soilbed_2098</name>
+      <pose>4.0 2.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_501138</uri>
+      <name>tomato_501138</name>
+      <pose>4.0 3.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_501138</uri>
+      <name>flowerpot_501138</name>
+      <pose>4.0 3.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_208883</uri>
+      <name>soilbed_208883</name>
+      <pose>4.0 3.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_486650</uri>
+      <name>tomato_486650</name>
+      <pose>4.0 4.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_486650</uri>
+      <name>flowerpot_486650</name>
+      <pose>4.0 4.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_732855</uri>
+      <name>soilbed_732855</name>
+      <pose>4.0 4.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_304278</uri>
+      <name>tomato_304278</name>
+      <pose>4.0 5.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_304278</uri>
+      <name>flowerpot_304278</name>
+      <pose>4.0 5.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_958709</uri>
+      <name>soilbed_958709</name>
+      <pose>4.0 5.0 0.4 0 0 0</pose>
+    </include>
+    
+    <!-- Row 4: X = 6 -->
+    <include>
+      <uri>metal_742559</uri>
+      <name>metal_742559</name>
+      <pose>6.0 0.5 -0.34 0 0 -1.6</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_160729</uri>
+      <name>tomato_160729</name>
+      <pose>6.0 0.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_160729</uri>
+      <name>flowerpot_160729</name>
+      <pose>6.0 0.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_473047</uri>
+      <name>soilbed_473047</name>
+      <pose>6.0 0.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_945095</uri>
+      <name>tomato_945095</name>
+      <pose>6.0 1.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_945095</uri>
+      <name>flowerpot_945095</name>
+      <pose>6.0 1.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_903414</uri>
+      <name>soilbed_903414</name>
+      <pose>6.0 1.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_309838</uri>
+      <name>tomato_309838</name>
+      <pose>6.0 2.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_309838</uri>
+      <name>flowerpot_309838</name>
+      <pose>6.0 2.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_807717</uri>
+      <name>soilbed_807717</name>
+      <pose>6.0 2.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_778101</uri>
+      <name>tomato_778101</name>
+      <pose>6.0 3.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_778101</uri>
+      <name>flowerpot_778101</name>
+      <pose>6.0 3.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_643289</uri>
+      <name>soilbed_643289</name>
+      <pose>6.0 3.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_553802</uri>
+      <name>tomato_553802</name>
+      <pose>6.0 4.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_553802</uri>
+      <name>flowerpot_553802</name>
+      <pose>6.0 4.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_36588</uri>
+      <name>soilbed_36588</name>
+      <pose>6.0 4.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_225469</uri>
+      <name>tomato_225469</name>
+      <pose>6.0 5.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_225469</uri>
+      <name>flowerpot_225469</name>
+      <pose>6.0 5.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_130484</uri>
+      <name>soilbed_130484</name>
+      <pose>6.0 5.0 0.4 0 0 0</pose>
+    </include>
+    
+    <!-- Row 5: X = 8 -->
+    <include>
+      <uri>metal_277132</uri>
+      <name>metal_277132</name>
+      <pose>8.0 0.5 -0.34 0 0 -1.6</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_843705</uri>
+      <name>tomato_843705</name>
+      <pose>8.0 0.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_843705</uri>
+      <name>flowerpot_843705</name>
+      <pose>8.0 0.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_239158</uri>
+      <name>soilbed_239158</name>
+      <pose>8.0 0.0 0.4 0 0 0</pose>
+    </include>
+   
+    <include>
+      <uri>tomato_517281</uri>
+      <name>tomato_517281</name>
+      <pose>8.0 1.0 0.55 0 0 0</pose>
+      </include>
+    <include>
+      <uri>flowerpot_517281</uri>
+      <name>flowerpot_517281</name>
+      <pose>8.0 1.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_239661</uri>
+      <name>soilbed_239661</name>
+      <pose>8.0 1.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_813285</uri>
+      <name>tomato_813285</name>
+      <pose>8.0 2.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_813285</uri>
+      <name>flowerpot_813285</name>
+      <pose>8.0 2.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_904773</uri>
+      <name>soilbed_904773</name>
+      <pose>8.0 2.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_401999</uri>
+      <name>tomato_401999</name>
+      <pose>8.0 3.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_401999</uri>
+      <name>flowerpot_401999</name>
+      <pose>8.0 3.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_548023</uri>
+      <name>soilbed_548023</name>
+      <pose>8.0 3.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_339781</uri>
+      <name>tomato_339781</name>
+      <pose>8.0 4.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_339781</uri>
+      <name>flowerpot_339781</name>
+      <pose>8.0 4.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_528435</uri>
+      <name>soilbed_528435</name>
+      <pose>8.0 4.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_456071</uri>
+      <name>tomato_456071</name>
+      <pose>8.0 5.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_456071</uri>
+      <name>flowerpot_456071</name>
+      <pose>8.0 5.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_266756</uri>
+      <name>soilbed_266756</name>
+      <pose>8.0 5.0 0.4 0 0 0</pose>
+    </include>
+    
+    <!-- Row 6: X = 10 -->
+    <include>
+      <uri>metal_125233</uri>
+      <name>metal_125233</name>
+      <pose>10.0 0.5 -0.34 0 0 -1.6</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_945644</uri>
+      <name>tomato_945644</name>
+      <pose>10.0 0.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_945644</uri>
+      <name>flowerpot_945644</name>
+      <pose>10.0 0.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_560462</uri>
+      <name>soilbed_560462</name>
+      <pose>10.0 0.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_654031</uri>
+      <name>tomato_654031</name>
+      <pose>10.0 1.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_654031</uri>
+      <name>flowerpot_654031</name>
+      <pose>10.0 1.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_385430</uri>
+      <name>soilbed_385430</name>
+      <pose>10.0 1.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_422498</uri>
+      <name>tomato_422498</name>
+      <pose>10.0 2.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_422498</uri>
+      <name>flowerpot_422498</name>
+      <pose>10.0 2.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_335633</uri>
+      <name>soilbed_335633</name>
+      <pose>10.0 2.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_36416</uri>
+      <name>tomato_36416</name>
+      <pose>10.0 3.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_36416</uri>
+      <name>flowerpot_36416</name>
+      <pose>10.0 3.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_914331</uri>
+      <name>soilbed_914331</name>
+      <pose>10.0 3.0 0.4 0 0 0</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_435120</uri>
+      <name>tomato_435120</name>
+      <pose>10.0 4.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_435120</uri>
+      <name>flowerpot_435120</name>
+      <pose>10.0 4.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_14997</uri>
+      <name>soilbed_14997</name>
+      <pose>10.0 4.0 0.4 0 0 0</pose>
+    </include>
+    <!-- Add third lamp -->
+    <include>
+      <uri>lamp_590550</uri>
+      <name>lamp_590550</name>
+      <pose>10.0 4.0 2.6 0 3.14159 1.570795</pose>
+    </include>
+    
+    <include>
+      <uri>tomato_454334</uri>
+      <name>tomato_454334</name>
+      <pose>10.0 5.0 0.55 0 0 0</pose>
+    </include>
+    <include>
+      <uri>flowerpot_454334</uri>
+      <name>flowerpot_454334</name>
+      <pose>10.0 5.0 0.5 0 0 -1.60</pose>
+    </include>
+    <include>
+      <uri>soilbed_685017</uri>
+      <name>soilbed_685017</name>
+      <pose>10.0 5.0 0.4 0 0 0</pose>
+    </include>
+
+  </world>
+</sdf>
+      

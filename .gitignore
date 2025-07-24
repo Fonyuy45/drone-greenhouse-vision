@@ -1,0 +1,37 @@
+# Build artifacts
+build/
+install/
+log/
+
+# Python
+dfv_env/
+*.pyc
+__pycache__/
+*.egg-info/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ROS
+*.bag
+*.bag.active
+
+# System
+.DS_Store
+Thumbs.db
+*~
+
+# Large model files (optional - you might want to include these)
+# *.pt
+# *.onnx
+# *.engine
+*.pt
+*.onnx
+*.engine
+*.pt
+*.onnx
+*.engine

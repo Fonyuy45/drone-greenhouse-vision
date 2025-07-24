@@ -1,0 +1,7 @@
+mavsdk>=1.4.0
+aioconsole>=0.6.0
+pygame>=2.1.0
+ultralytics>=8.0.0
+opencv-python>=4.7.0
+numpy>=1.21.0
+PyYAML>=6.0
