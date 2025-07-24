@@ -1,4 +1,4 @@
-# 🚁🍅 Autonomous Drone Tomato Farm Vision System
+# 🍅 Autonomous Drone Tomato Farm Vision System
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
@@ -6,28 +6,35 @@
 [![PX4](https://img.shields.io/badge/PX4-v1.14-green.svg)](https://px4.io/)
 
 **Autonomous drone system for real-time tomato detection, classification, and tracking in custom greenhouse environments using PX4-ROS2-Gazebo simulation with custom YOLO11 models.**
+<img width="1833" height="966" alt="image" src="https://github.com/user-attachments/assets/f79d4d98-2678-43ef-987c-d804315609b8" />
 
-> **Built upon**: [PX4-ROS2-Gazebo-YOLOv8](https://github.com/monemati/PX4-ROS2-Gazebo-YOLOv8) by monemati  
-> **Tomato Farm Models**: Generated using [aoc_tomato_farm](https://github.com/LCAS/aoc_tomato_farm) by LCAS
+<img width="1808" height="949" alt="image" src="https://github.com/user-attachments/assets/89652103-385a-4bb3-88ce-0ca376422140" />
 
-## 🎯 Project Overview
+##  Project Overview
 
 This project extends the [PX4-ROS2-Gazebo-YOLOv8](https://github.com/monemati/PX4-ROS2-Gazebo-YOLOv8) framework with custom tomato farm environments and specialized YOLO11 detection models. The system combines autonomous drone flight control with state-of-the-art computer vision to create a comprehensive tomato farm monitoring solution.
 
 The custom greenhouse environment was generated using the [aoc_tomato_farm](https://github.com/LCAS/aoc_tomato_farm) package, creating realistic 8×8 tomato plant layouts with proper lighting and structure for optimal computer vision performance.
 
-### ✨ Key Features
+## Applications
+- Robotic Harvesting: Automated fruit picking systems
+- Yield Estimation: Greenhouse monitoring and analytics
+- Sorting Systems: Post-harvest quality control
+- Mobile Apps: Farm management tools
+- Research: Agricultural computer vision studies
 
-- 🚁 **Autonomous Flight**: PX4-based drone control with keyboard and programmatic interfaces
-- 🍅 **Advanced Detection**: Custom-trained YOLO11 model with 90.1% mAP for tomato segmentation
-- 🎯 **Multi-Class Classification**: Detects green, half-ripened, and fully-ripened tomatoes
-- 🏠 **Custom Greenhouse Environment**: Realistic tomato farm generated with aoc_tomato_farm package
-- 📊 **Real-time Visualization**: Live detection results in RQT and OpenCV windows
-- 🔄 **ROS2 Integration**: Complete ROS2 ecosystem with topic-based communication
-- 📈 **Analytics**: Tomato counting, tracking, and ripeness statistics
-- 🌱 **Scalable Farm Layout**: 8×8 grid layout with 64+ tomato plants and greenhouse structure
+###  Key Features
 
-## 🏗️ System Architecture
+-  **Autonomous Flight**: PX4-based drone control with keyboard and programmatic interfaces
+-  **Advanced Detection**: Custom-trained YOLO11 model with 90.1% mAP for tomato segmentation
+-  **Multi-Class Classification**: Detects green, half-ripened, and fully-ripened tomatoes
+-  **Custom Greenhouse Environment**: Realistic tomato farm generated with aoc_tomato_farm package
+-  **Real-time Visualization**: Live detection results in RQT and OpenCV windows
+-  **ROS2 Integration**: Complete ROS2 ecosystem with topic-based communication
+-  **Analytics**: Tomato counting, tracking, and ripeness statistics
+-  **Scalable Farm Layout**: 8×8 grid layout with 64+ tomato plants and greenhouse structure
+
+##  System Architecture
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
@@ -43,7 +50,7 @@ The custom greenhouse environment was generated using the [aoc_tomato_farm](http
 └─────────────────┘    └──────────────────┘    └─────────────────┘
 ```
 
-## 🚀 Installation & Setup
+##  Installation & Setup
 
 ### Prerequisites
 
@@ -59,7 +66,7 @@ The custom greenhouse environment was generated using the [aoc_tomato_farm](http
 ```bash
 # Clone this repository to your home directory
 cd ~
-git clone https://github.com/YOUR_USERNAME/drone-farm-vision-system.git drone_farm_vision_ws
+git clone https://github.com/Fonyuy45/drone-greenhouse-vision.git drone_farm_vision_ws
 cd drone_farm_vision_ws
 ```
 
@@ -212,7 +219,7 @@ python keyboard-mavsdk-test.py
 | `←` `→` | Rotate left/right |
 | `L` | Land drone |
 
-## 🍅 Tomato Detection Model
+##  Tomato Detection Model
 
 This system uses a custom-trained YOLO11 model for tomato segmentation:
 
@@ -224,13 +231,13 @@ This system uses a custom-trained YOLO11 model for tomato segmentation:
 
 ### Detection Capabilities
 
-- 🟢 **Green Tomatoes**: Unripe fruits for growth monitoring
-- 🟡 **Half-ripened**: Transition stage tracking
-- 🔴 **Fully-ripened**: Ready-to-harvest identification
-- 📊 **Instance Segmentation**: Precise boundary detection
-- 🔢 **Counting**: Real-time tomato quantity tracking
+-  **Green Tomatoes**: Unripe fruits for growth monitoring
+-  **Half-ripened**: Transition stage tracking
+-  **Fully-ripened**: Ready-to-harvest identification
+-  **Instance Segmentation**: Precise boundary detection
+-  **Counting**: Real-time tomato quantity tracking
 
-## 🏠 Custom Greenhouse Environment
+##  Custom Greenhouse Environment
 
 The simulation features a custom greenhouse environment generated using the [aoc_tomato_farm](https://github.com/LCAS/aoc_tomato_farm) package:
 
@@ -242,9 +249,8 @@ The simulation features a custom greenhouse environment generated using the [aoc
 - **Generation**: Parametrically generated using Jupyter notebooks from aoc_tomato_farm
 - **Compatibility**: Both Gazebo Garden/Harmonic compatible models
 
-## 📁 Project Structure
+##  Project Structure
 
-This repository follows **standard ROS2 workspace conventions**:
 
 ```
 drone_farm_vision_ws/
@@ -279,7 +285,7 @@ drone_farm_vision_ws/
 └── setup_env.sh                   # Environment configuration script
 ```
 
-## 🔧 Configuration
+##  Configuration
 
 ### Detection Parameters
 
@@ -318,7 +324,7 @@ movement_speed = 1.0
 takeoff_altitude = 2.5
 ```
 
-## 📊 Performance Metrics
+## Performance Metrics
 
 ### Detection Performance
 - **mAP@0.5**: 90.1%
@@ -360,7 +366,7 @@ async def survey_mission():
         log_detections(detections)
 ```
 
-## 📈 Analytics and Monitoring
+##  Analytics and Monitoring
 
 The system provides real-time analytics:
 
@@ -369,7 +375,7 @@ The system provides real-time analytics:
 - **Ripeness Progression**: Temporal tracking of fruit development
 - **Coverage Statistics**: Area surveyed and detection density
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -392,11 +398,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ⭐ **Star this repository if you found it helpful!**
 
-🚁🍅 *Autonomous tomato farming with precision agriculture and computer vision*
+ *Autonomous tomato farming with precision agriculture and computer vision*
 
 > **Built with**: PX4 Autopilot + ROS2 Humble + Gazebo + YOLO11 + Custom Tomato Farm Models
 
-## 🌟 Related Projects & Acknowledgments
+##  Related Projects & Acknowledgments
 
 This project builds upon and integrates several excellent open-source projects:
 
@@ -413,7 +419,7 @@ This project builds upon and integrates several excellent open-source projects:
 - **[YOLO11 Tomato Segmentation](https://github.com/Fonyuy45/yolo11-tomato-segmentation)**  
   *Custom-trained YOLO11 model achieving 90.1% mAP for tomato detection and segmentation*
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - **[PX4 Development Team](https://px4.io/)** for the excellent autopilot system
 - **[ROS2 Community](https://ros.org/)** for the robotic middleware framework  
