@@ -7,11 +7,29 @@
 
 **Autonomous drone system for real-time tomato detection, classification, and tracking in custom greenhouse environments using PX4-ROS2-Gazebo simulation with custom YOLO11 models.**
 
-![Untitled video - Made with Clipchamp (1) (1)](https://github.com/user-attachments/assets/b23931a8-0e5d-4093-9c98-c45391903972)
-
-<img width="1816" height="998" alt="image" src="https://github.com/user-attachments/assets/376575c2-cdf8-40c2-8d58-b0f2d5472e00" />      
-<img width="1808" height="949" alt="image" src="https://github.com/user-attachments/assets/89652103-385a-4bb3-88ce-0ca376422140" />
-
+System in Action
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/b23931a8-0e5d-4093-9c98-c45391903972" alt="Autonomous Drone Tomato Detection Demo" width="800"/>
+  <br/>
+  <em>Autonomous drone performing real-time tomato detection in custom greenhouse environment</em>
+</div>
+Detection Results
+<div align="center">
+  <table>
+    <tr>
+      <td width="50%">
+        <img src="https://github.com/user-attachments/assets/376575c2-cdf8-40c2-8d58-b0f2d5472e00" alt="Tomato Detection Interface" width="100%"/>
+        <br/>
+        <em>Real-time detection interface with classification results</em>
+      </td>
+      <td width="50%">
+        <img src="https://github.com/user-attachments/assets/89652103-385a-4bb3-88ce-0ca376422140" alt="Greenhouse Environment" width="100%"/>
+        <br/>
+        <em>Custom greenhouse environment with 8×8 tomato plant layout</em>
+      </td>
+    </tr>
+  </table>
+</div>
 ##  Project Overview
 
 This project extends the [PX4-ROS2-Gazebo-YOLOv8](https://github.com/monemati/PX4-ROS2-Gazebo-YOLOv8) framework with custom tomato farm environments and specialized YOLO11 detection models. The system combines autonomous drone flight control with state-of-the-art computer vision to create a comprehensive tomato farm monitoring solution.
