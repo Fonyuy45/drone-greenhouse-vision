@@ -168,7 +168,7 @@ source setup_env.sh
 # ROS2 packages: 2 px4 packages available
 ```
 
-## 🎮 Running the System
+## Running the System
 
 You need **5 separate terminals** for the complete system. Follow this exact sequence:
 
