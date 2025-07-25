@@ -207,19 +207,19 @@ python keyboard-mavsdk-test.py
 
 > **Note**: Make sure to wait for each terminal to fully initialize before starting the next one. Terminal 2 should show "LAUNCH COMPLETE!" before proceeding.
 
-## 🎮 Flight Controls
-
+## Flight Controls
+Focus on the pygame window that appears by clicking on it, then:
 | Key | Action |
 |-----|--------|
-| `R` | Arm drone |
-| `W` | Move forward |
-| `S` | Move backward |
-| `A` | Move left |
-| `D` | Move right |
-| `↑` | Increase altitude |
-| `↓` | Decrease altitude |
-| `←` `→` | Rotate left/right |
-| `L` | Land drone |
+| `r` | Arm drone |
+| `w` | Increase altitude |
+| `s` | Decrease altitude |
+| `a` | Rotate left |
+| `d` | Move right |
+| `↑` | Move forward  |
+| `↓` | Move backward |
+| `←` `→` | Move left/right |
+| `l` | Land drone |
 
 ##  Tomato Detection Model
 
@@ -406,8 +406,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ##  Related Projects & Acknowledgments
 
-This project builds upon and integrates several excellent open-source projects:
-
 ### Base Framework
 - **[PX4-ROS2-Gazebo-YOLOv8](https://github.com/monemati/PX4-ROS2-Gazebo-YOLOv8)** by monemati  
   *The foundational framework for PX4-ROS2-Gazebo integration with YOLO object detection*
@@ -417,7 +415,7 @@ This project builds upon and integrates several excellent open-source projects:
   *Tomato farm/glasshouse generator compatible with both Gazebo and Unity*  
   *Citation*: Flores, J.P.E., Yilmaz, A., Avendaño, L.A.S., Cielniak, G. (2024). Comparative Analysis of Unity and Gazebo Simulators for Digital Twins of Robotic Tomato Harvesting Scenarios. TAROS 2024.
 
-### Computer Vision Model
+### My Computer Vision Model
 - **[YOLO11 Tomato Segmentation](https://github.com/Fonyuy45/yolo11-tomato-segmentation)**  
   *Custom-trained YOLO11 model achieving 90.1% mAP for tomato detection and segmentation*
 
